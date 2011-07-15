@@ -1,11 +1,11 @@
-‰‚ß‚Ä‚ÌAmon2‚ÆTengƒƒ‚
-Ql@http://d.hatena.ne.jp/memememomo/20110213/1297565345
+åˆã‚ã¦ã®Amon2ã¨Tengãƒ¡ãƒ¢
+å‚è€ƒã€€http://d.hatena.ne.jp/memememomo/20110213/1297565345
 
-ƒCƒ“ƒXƒg[ƒ‹
+ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
 cpanm Amon2
 cpanm Teng
 
-Amon2ƒZƒbƒgƒAƒbƒv
+Amon2ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—
 
 amon2-setup.pl MyApp
 -- Running flavor: Basic --
@@ -46,7 +46,7 @@ writing static/503.html
 writing static/504.html
 
 
-config/development.pl‚ÉMySQLİ’è‚ğ“ü—Í
+config/development.plã«MySQLè¨­å®šã‚’å…¥åŠ›
 
 config/delelopment.pl
 +{
@@ -60,7 +60,7 @@ config/delelopment.pl
     }
 };
 
-script/make_schema.pl‚Ìì¬
+script/make_schema.plã®ä½œæˆ
 
 use strict;
 use warnings;
@@ -104,11 +104,11 @@ sub db {
     return $self->{db};
 }
 
-ˆÈã‚Å$c->db‚Åg‚¦‚é‚æ‚¤‚É‚È‚é
+ä»¥ä¸Šã§$c->dbã§ä½¿ãˆã‚‹ã‚ˆã†ã«ãªã‚‹
 
-ã‹L‚ğ‚¢‚¿‚¢‚¿ì‚é‚Ì‚Í‘å•Ï‚È‚Ì‚ÅFlavor‚Å‚Ğ‚ÈŒ`‚ğì‚é
-Ql http://wata-jp.ldblog.jp/archives/1686488.html
+ä¸Šè¨˜ã‚’ã„ã¡ã„ã¡ä½œã‚‹ã®ã¯å¤§å¤‰ãªã®ã§Flavorã§ã²ãªå½¢ã‚’ä½œã‚‹
+å‚è€ƒ http://wata-jp.ldblog.jp/archives/1686488.html
 cpanm Module::Setup
 
-‚Æ‚è‚ ‚¦‚¸ Teng‚Ìmake_schema.pl‚ª“ü‚Á‚½‚â‚Â‚ğ
-Amon2-Setup-Flavor-Rosiroì‚Á‚Ä‚İ‚½
+ã¨ã‚Šã‚ãˆãš Tengã®make_schema.plãŒå…¥ã£ãŸã‚„ã¤ã‚’
+Amon2-Setup-Flavor-Rosiroä½œã£ã¦ã¿ãŸ

@@ -1,0 +1,111 @@
+初めてのAmon2とTengメモ
+参考　http://d.hatena.ne.jp/memememomo/20110213/1297565345
+
+インストール
+cpanm Amon2
+cpanm Teng
+
+Amon2セットアップ
+
+amon2-setup.pl MyApp
+-- Running flavor: Basic --
+writing lib/MyApp.pm
+writing lib/MyApp/Web.pm
+writing tmpl/index.tt
+writing app.psgi
+writing Makefile.PL
+writing t/00_compile.t
+writing t/Util.pm
+writing t/01_root.t
+writing t/02_mech.t
+writing xt/03_pod.t
+mkpath: static/img/
+mkpath: static/js/
+writing lib/MyApp.pm
+writing lib/MyApp/Web.pm
+writing lib/MyApp/Web/Dispatcher.pm
+writing config/development.pl
+writing config/deployment.pl
+writing config/test.pl
+writing sql/my.sql
+writing sql/sqlite3.sql
+writing tmpl/index.tt
+writing tmpl/include/layout.tt
+writing static/js/jquery-1.6.2.min.js
+writing static/css/blueprint/screen.css
+writing static/css/blueprint/print.css
+writing static/css/blueprint/ie.css
+writing static/css/main.css
+writing t/00_compile.t
+writing xt/02_perlcritic.t
+writing .gitignore
+writing static/404.html
+writing static/500.html
+writing static/502.html
+writing static/503.html
+writing static/504.html
+
+
+config/development.plにMySQL設定を入力
+
+config/delelopment.pl
++{
+    'Teng' => {
+         dsn => 'dbi:SQLite:dbname=hello.db',
+         username => '',
+         password => '',
+     },
+     +{
+         mysql_enable_utf8 => '1',
+    }
+};
+
+script/make_schema.plの作成
+
+use strict;
+use warnings;
+use DBI;
+use FindBin;
+use File::Spec;
+use lib File::Spec->catdir($FindBin::Bin, '..', 'lib');
+use lib File::Spec->catdir($FindBin::Bin, '..', 'extlib', 'lib', 'perl5');
+use MyApp;
+use Teng::Schema::Dumper;
+
+my $c = MyApp->bootstrap;
+my $conf = $c->config->{'Teng'};
+
+my $dbh = DBI->connect($conf->{dsn}, $conf->{username}, $conf->{password}, $conf->{connect_options}) or die "Cannot connect to DB:: " . $DBI::errstr;
+my $schema = Teng::Schema::Dumper->dump(dbh => $dbh, namespace => 'MyApp::DB');
+
+my $dest = File::Spec->catfile($FindBin::Bin, '..', 'lib', 'MyApp', 'DB', 'Schema.pm');
+open my $fh, '>', $dest or die "cannot open file '$dest': $!";
+print {$fh} $schema;
+close;
+
+script/make_schema.pl
+
+lib/MyApp/DB.pm
+
+package MyApp::DB;
+use parent 'Teng';
+1;
+
+lib/MyApp.pm
+use MyApp::DB;
+
+sub db {
+    my ($self) = @_;
+    if (!defined $self->{db}) {
+        my $conf = $self->config->{'Teng'} or die "missing configuration for 'Teng'";
+        my $dbh = DBI->connect($conf->{dsn}, $conf->{username}, $conf->{password}, $conf->{connect_options}) or "Cannot connect to DB:: " . $DBI::errstr;
+        $self->{db} = MyApp::DB->new({ dbh => $dbh });
+    }
+    return $self->{db};
+}
+
+以上で$c->dbで使えるようになる
+
+上記をいちいち作るのは大変なのでFlavorでひな形を作る
+参考 http://wata-jp.ldblog.jp/archives/1686488.html
+cpanm Module::Setup

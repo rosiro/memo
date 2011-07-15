@@ -109,3 +109,6 @@ sub db {
 上記をいちいち作るのは大変なのでFlavorでひな形を作る
 参考 http://wata-jp.ldblog.jp/archives/1686488.html
 cpanm Module::Setup
+
+とりあえず Tengのmake_schema.plが入ったやつを
+Amon2-Setup-Flavor-Rosiro作ってみた
